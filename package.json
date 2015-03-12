@@ -1,0 +1,26 @@
+{
+  "name": "edgy",
+  "main": "apps.coffee",
+  "version": "0.0.0",
+  "description": "Pixel art SNS",
+
+  "scripts": {
+    "destroy": "pm2 kill && pm2 flush",
+
+    "start": "pm2 kill && coffee apps.coffee && pm2 list && pm2 logs",
+    "test": "pm2 restart all && pm2 logs"
+  },
+  
+  "dependencies": {
+    "bouncy": "^3.2.2",
+    "coffee-script": "^1.9.1",
+    "commander": "^2.7.1",
+    "pm2": "^0.12.7",
+    "q": "^1.2.0",
+    "rimraf": "^2.3.2",
+    "yamljs": "^0.2.1"
+  },
+  
+  "author": "59naga <i59naga@icloud.com> (http://berabou.me)",
+  "license": "MIT"
+}

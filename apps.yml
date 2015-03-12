@@ -1,0 +1,21 @@
+berabou.me:
+  PORT: 59798
+  HOST: berabou.me
+  REPO: https://github.com/59naga/berabou.me.git
+
+edgy.black:
+  PORT: 59001
+  HOST: edgy.black
+  REPO: https://github.com/59naga/edgy.black.git
+
+edgy.website:
+  PORT: 59002
+  HOST: edgy.website
+  REPO: https://github.com/59naga/edgy.website.git
+
+travis.edgy.black:
+  PORT: 59999
+  HOST: travis.edgy.black
+
+vhost:
+  PORT: 80
