@@ -23,8 +23,6 @@ class PM2 extends require './index'
             console.error host,'Change options.env.PORT to 8000 for avoid of EACCES Error. Requirement sudo.'
             options.env.PORT= 8000
 
-          console.log script,options
-
           @api.start script,options,(error,process)->
             deferred.reject error if error?
             deferred.resolve process
