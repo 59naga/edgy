@@ -12,10 +12,9 @@ http.createServer (req,res)->
     querystring= require 'querystring'
 
     {host,sha1,key}= querystring.parse body
-    console.log host,sha1,key
-    return res.end "403 Forbidden" if key isnt fs.readFileSync('.apps.key').toString()
+    return res.end "403 Forbidden" if key isnt fs.readFileSync('.apps.key').toString().trim()
 
-    reboot(host,sha1)
+    deploy(host,sha1)
     .then (result)->
       res.statusCode= 200
       res.end "200 #{host} #{result}"
@@ -26,7 +25,7 @@ http.createServer (req,res)->
 .listen process.env.PORT,->
   console.log "Open #{process.env.HOST} > http://localhost:#{process.env.PORT}/"
 
-reboot= (host,sha1)->
+deploy= (host,sha1)->
   q= require 'q'
   deferred= q.defer()
 
