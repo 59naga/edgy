@@ -7,7 +7,7 @@ bouncy (req,res,bounce)->
     if req.headers.host is host
       return bounce env.PORT
   for host,env of apps
-    if req.headers.host.indexOf(host) > -1
+    if req.headers.host?.indexOf(host) > -1
       return bounce env.PORT
 
   res.statusCode= 404
