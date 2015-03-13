@@ -12,6 +12,7 @@ http.createServer (req,res)->
     querystring= require 'querystring'
 
     {host,sha1,key}= querystring.parse body
+    console.log host,sha1,key
     return res.end "403 Forbidden" if key isnt fs.readFileSync('.apps.key').toString()
 
     reboot(host,sha1)
