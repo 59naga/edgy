@@ -66,11 +66,6 @@ class Repository extends require './index'
     deferred.promise
 
   update: (sha1=null,force=no)->
-    deferred= @q.defer()
-
-    env= @env
-
-    pm2= require './pm2'
     @fetchLogs().then (logs)->
       [outofdate,local,remote]= logs
 
@@ -82,19 +77,7 @@ class Repository extends require './index'
           deferred.resolve 'already up-to-date.'
           return deferred.promise
 
-      pm2.connect()
-    .then ->
-      pm2.delete env.HOST
-    .then =>
       @initialize()
-    .then ->
-      pm2.start env
-    .then ->
-      deferred.resolve 'successfully updated.'
-    .catch (error)->
-      deferred.reject error
-    
-    deferred.promise
 
   fetchLogs: ->
     deferred= @q.defer()
