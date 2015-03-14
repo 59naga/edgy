@@ -12,9 +12,10 @@ http.createServer (req,res)->
     querystring= require 'querystring'
 
     {host,sha1,key}= querystring.parse body
+    console.log host,sha1,key,req.headers
     return res.end "403 Forbidden" if key isnt fs.readFileSync('.apps.key').toString().trim()
 
-    deploy(host,sha1)
+    deploy host,sha1
     .then (result)->
       res.statusCode= 200
       res.end "200 #{host} #{result}"

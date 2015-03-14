@@ -1,8 +1,6 @@
 {
   "name": "edgy",
   "main": "apps.coffee",
-  "version": "0.0.0",
-  "description": "Pixel art SNS",
 
   "scripts": {
     "destroy": "pm2 kill && pm2 flush",

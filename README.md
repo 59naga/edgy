@@ -1,6 +1,7 @@
-# EDGY berabou.me backdoor
+# EDGY
+berabou.me backdoor
 
-v 0.0.1 Sat Mar 14 2015
+v0.0.1 Sat Mar 14 2015
 =========================
 * [`unknown`][1]: :bug: Fix: Cannot read property 'indexOf' of undefined
 * [`unknown`][2]: :bug: Fix: Always 403 at deploy
