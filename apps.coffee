@@ -6,7 +6,11 @@ if '-r' in process.argv
   console.log 'berabou.me update test'
 
   repo= new Repository 'apps/berabou.me',app_envs['berabou.me']
-  repo.update null,yes
+  pm2.delete()
+  .then ->
+    repo.update null,yes
+  .then ->
+    pm2.start app_envs['berabou.me']
   .then ->
     console.log 'ok'
   return

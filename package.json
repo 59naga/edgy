@@ -6,6 +6,8 @@
     "reload": "pm2 reload all",
     "destroy": "pm2 kill && pm2 flush",
 
+    "pm2": "echo $(npm bin)/pm2",
+
     "reboot_test": "coffee apps.coffee -r",
 
     "start": "pm2 kill && coffee apps.coffee && pm2 list && pm2 logs",
