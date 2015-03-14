@@ -9,7 +9,7 @@ if '-r' in process.argv
   repo= new Repository 'apps/berabou.me',apps['berabou.me']
   pm2.connect()
   .then ->
-    pm2.delete()
+    pm2.delete 'berabou.me'
   .then ->
     repo.update null,yes
   .then ->

@@ -1,2 +1,9 @@
 .apps.key
 apps
+
+.DS_Store
+node_modules
+bower_components
+npm-debug.log
+jasminetea.json
+coverage
