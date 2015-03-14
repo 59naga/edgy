@@ -1,7 +1,7 @@
 apps= require('yamljs').load 'apps.yml'
 
-Repository= require './lib/repository'
 pm2= require './lib/pm2'
+Repository= require './lib/repository'
 
 if '-r' in process.argv
   console.log 'berabou.me update test'

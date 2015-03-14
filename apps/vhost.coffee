@@ -1,6 +1,6 @@
 apps= require('yamljs').load 'apps.yml'
-path= require 'path'
 
+path= require 'path'
 bouncy= require 'bouncy'
 bouncy (req,res,bounce)->
   for host,env of apps

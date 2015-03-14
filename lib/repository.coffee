@@ -5,12 +5,13 @@ child_process= require 'child_process'
 rimraf= require 'rimraf'
 
 class Repository extends require './index'
-  catastrophe: (apps,appDir='apps')->
+  appDir:'apps'
+  catastrophe: (apps)->
     repositories= []
     for host,app of apps
       continue if app.REPO is undefined
 
-      repository= new Repository path.resolve(__dirname,'..',appDir,host),app
+      repository= new Repository path.resolve(__dirname,'..',@appDir,host),app
       do (repository)->
         repo= repository
           .fetchLogs()
@@ -69,6 +70,7 @@ class Repository extends require './index'
     @fetchLogs().then (logs)=>
       [outofdate,local,remote]= logs
 
+      @log @env.HOST,outofdate,local,remote
       if force is no
         return @q.reject 'invaild request.' if remote isnt sha1
         return @q.resolve 'already up-to-date.' if not outofdate
@@ -80,6 +82,7 @@ class Repository extends require './index'
 
     script= "git fetch"
 
+    @log @env.HOST,'exists',@dirname
     if fs.existsSync(@dirname) is no
       process.nextTick ->
         deferred.resolve [yes,null,null]

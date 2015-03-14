@@ -3,7 +3,8 @@
   "main": "apps.coffee",
 
   "scripts": {
-    "reload": "pm2 reload all",
+    "restart": "git pull && pm2 restart all",
+    "reload": "git pull && pm2 reload all",
     "destroy": "pm2 kill && pm2 flush",
 
     "pm2": "echo $(npm bin)/pm2",

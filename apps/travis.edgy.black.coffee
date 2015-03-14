@@ -1,8 +1,31 @@
 apps= require('yamljs').load 'apps.yml'
-path= require 'path'
-fs= require 'fs'
 
-authKey= fs.readFileSync('.apps.key').toString().trim()
+fs= require 'fs'
+path= require 'path'
+pm2= require '../lib/pm2'
+Repository= require '../lib/repository'
+
+try
+  authKey= fs.readFileSync('.apps.key').toString().trim()
+catch
+  authKey= 'local'
+
+deploy= (host,sha1)->
+  app= apps[host]
+  repo= new Repository path.resolve(__dirname,host),app
+  return repo.q.reject 'host is undefined' if app is undefined
+
+  console.log host,sha1
+
+  repo.update sha1
+  .then ->
+    pm2.connect()
+  .then ->
+    pm2.delete host
+  .then ->
+    pm2.start {"#{host}":apps[host]}
+  .then ->
+    repo.q.resolve 'Update successfully'
 
 http= require 'http'
 http.createServer (req,res)->
@@ -14,7 +37,7 @@ http.createServer (req,res)->
     querystring= require 'querystring'
 
     {host,sha1,key}= querystring.parse body
-    console.log host,sha1,key is authKey,req.headers
+    console.log host,sha1,key is authKey
     return res.end "403 Forbidden" if key isnt authKey
 
     deploy host,sha1
@@ -27,20 +50,3 @@ http.createServer (req,res)->
 
 .listen process.env.PORT,->
   console.log "Open #{process.env.HOST} > http://localhost:#{process.env.PORT}/"
-
-deploy= (host,sha1)->
-  app= apps[host]  
-  return q.reject 'host is undefined' if app is undefined
-
-  pm2= require '../lib/pm2'
-  path= require 'path'
-  Repository= require '../lib/repository'
-  repo= new Repository path.resolve('..',host),app
-
-  pm2.connect()
-  .then ->
-    pm2.delete host
-  .then ->
-    repo.update sha1
-  .then ->
-    pm2.start {"#{host}":apps[host]}
