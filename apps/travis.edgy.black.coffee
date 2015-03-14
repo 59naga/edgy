@@ -29,11 +29,18 @@ http.createServer (req,res)->
   console.log "Open #{process.env.HOST} > http://localhost:#{process.env.PORT}/"
 
 deploy= (host,sha1)->
-  env= apps[host]  
-  return q.reject 'host is undefined' if env is undefined
+  app= apps[host]  
+  return q.reject 'host is undefined' if app is undefined
 
   pm2= require '../lib/pm2'
   path= require 'path'
   Repository= require '../lib/repository'
-  repository= new Repository path.resolve('..',host),env
-  repository.update sha1
+  repo= new Repository path.resolve('..',host),app
+
+  pm2.connect()
+  .then ->
+    pm2.delete host
+  .then ->
+    repo.update sha1
+  .then ->
+    pm2.start {"#{host}":apps[host]}
