@@ -7,7 +7,9 @@ if '-r' in process.argv
   console.log 'berabou.me update test'
 
   repo= new Repository 'apps/berabou.me',apps['berabou.me']
-  pm2.delete()
+  pm2.connect()
+  .then ->
+    pm2.delete()
   .then ->
     repo.update null,yes
   .then ->

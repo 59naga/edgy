@@ -35,6 +35,9 @@ class PM2 extends require './index'
   delete: (name='all')->
     deferred= @q.defer()
 
+    if @api is undefined
+      return deferred.reject 'Requirement @connect'
+
     @api.list (error,processes=[])=>
       return deferred.reject error if error
       return deferred.resolve null if processes.length is 0
