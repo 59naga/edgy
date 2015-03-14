@@ -27,42 +27,11 @@ http.createServer (req,res)->
   console.log "Open #{process.env.HOST} > http://localhost:#{process.env.PORT}/"
 
 deploy= (host,sha1)->
-  q= require 'q'
-  deferred= q.defer()
-
-  env= apps[host]
-  if env is undefined
-    process.nextTick ->
-      deferred.reject 'host is undefined'
-    return deferred.promise
+  env= apps[host]  
+  return q.reject 'host is undefined' if env is undefined
 
   pm2= require '../lib/pm2'
   path= require 'path'
   Repository= require '../lib/repository'
   repository= new Repository path.resolve('..',host),env
-  repository.fetchLogs().then (logs)->
-    [outofdate,local,remote]= logs
-
-    if not outofdate
-      deferred.resolve 'already up-to-date.'
-      return deferred.promise
-
-    if remote isnt sha1
-      deferred.resolve 'invaild request.'
-      return deferred.promise
-
-    pm2.connect()
-  .then ->
-    pm2.delete HOST
-  .then ->
-    repository.initialize()
-  .then ->
-    envs= {}
-    envs[HOST]= env
-    pm2.start envs
-  .then ->
-    deferred.resolve 'successfully updated.'
-  .catch (error)->
-    deferred.reject error
-  
-  deferred.promise
+  repository.update sha1

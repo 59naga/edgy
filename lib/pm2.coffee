@@ -1,9 +1,8 @@
+fs= require 'fs'
 path= require 'path'
 
 class PM2 extends require './index'
   start: (apps,appDir='apps')->
-    deferred= @q.defer()
-
     processes= []
     for host,env of apps
       do (host,env)=>
@@ -15,13 +14,13 @@ class PM2 extends require './index'
 
           options= {}
           options.env= env
-          options.cwd= path.resolve __dirname,'..' if env.REPO is undefined
-          options.cwd?= appRoot
+          options.cwd= appRoot
+          options.cwd= path.resolve __dirname,'..' if not fs.existsSync appRoot
           options.name= host
-
           if options.env.PORT is 80 and process.getuid() isnt 0
-            console.error host,'Change options.env.PORT to 8000 for avoid of EACCES Error. Requirement sudo.'
+            @log host,'Change options.env.PORT to 8000 for avoided EACCES Error. Requirement sudo.'
             options.env.PORT= 8000
+          @log host,JSON.stringify options
 
           @api.start script,options,(error,process)->
             deferred.reject error if error?
@@ -31,13 +30,7 @@ class PM2 extends require './index'
 
         processes.push deferred.promise
 
-    @q.all processes
-    .then (processes)->
-      deferred.resolve processes
-    .catch (error)->
-      deferred.reject error
-
-    deferred.promise
+    @q.allSettled processes
 
   delete: (name='all')->
     deferred= @q.defer()
@@ -49,8 +42,8 @@ class PM2 extends require './index'
       names= (processName= process.name for process in processes)
       return deferred.resolve null if name isnt 'all' and not (name in names)
 
-      @api.delete name,(error)->
-        console.log 'deleted',name
+      @api.delete name,(error)=>
+        @log 'deleted',name
         return deferred.reject error if error
         return deferred.resolve null
 

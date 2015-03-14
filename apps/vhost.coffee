@@ -15,7 +15,7 @@ bouncy (req,res,bounce)->
 
 .listen process.env.PORT,->
   try
-    process.setuid 500
+    process.setuid 500 if process.getuid() is 0
   catch error
     console.error error.stack
 

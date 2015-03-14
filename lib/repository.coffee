@@ -1,5 +1,3 @@
-debug= require('debug') 'edgy:repo'
-
 fs= require 'fs'
 path= require 'path'
 child_process= require 'child_process'
@@ -24,7 +22,7 @@ class Repository extends require './index'
 
         repositories.push repo
 
-    @q.all repositories
+    @q.allSettled repositories
 
   constructor: (@dirname,@env)->
   initialize: ->
@@ -35,11 +33,11 @@ class Repository extends require './index'
     rimraf @dirname,(error)=>
       return deferred.reject error if error?
 
-      debug script
+      @log @env.HOST,script
       child_process.exec script,(error,stdout,stderr)=>
         return deferred.reject error if error?
 
-        debug stdout,stderr
+        @log @env.HOST,stdout,stderr
 
         @install().then (stdout)=>
           deferred.resolve this
@@ -55,17 +53,47 @@ class Repository extends require './index'
 
     if fs.existsSync(path.join @dirname,'package.json') is no
       process.nextTick =>
-        deferred.resolve "#{@env.HOST} is Not exists package.json" 
-      return deferred.promise
+        @log @env.HOST,'Not exists package.json' 
+        deferred.resolve this
+    else
+      @log @env.HOST,script
+      child_process.exec script,cwd:@dirname,(error,stdout,stderr)=>
+        return deferred.reject error if error?
 
-    debug script
-    child_process.exec script,cwd:@dirname,(error,stdout,stderr)=>
-      return deferred.reject error if error?
+        @log @env.HOST,stdout,stderr
+        deferred.resolve this
 
-      debug stdout,stderr
+    deferred.promise
 
-      deferred.resolve this
+  update: (sha1=null,force=no)->
+    deferred= @q.defer()
 
+    env= @env
+
+    pm2= require './pm2'
+    @fetchLogs().then (logs)->
+      [outofdate,local,remote]= logs
+
+      if force is no
+        if remote isnt sha1
+          deferred.reject 'invaild request.'
+          return deferred.promise
+        if not outofdate
+          deferred.resolve 'already up-to-date.'
+          return deferred.promise
+
+      pm2.connect()
+    .then ->
+      pm2.delete env.HOST
+    .then =>
+      @initialize()
+    .then ->
+      pm2.start env
+    .then ->
+      deferred.resolve 'successfully updated.'
+    .catch (error)->
+      deferred.reject error
+    
     deferred.promise
 
   fetchLogs: ->
@@ -78,20 +106,20 @@ class Repository extends require './index'
         deferred.resolve [yes,null,null]
       return deferred.promise
 
-    debug script
+    @log @env.HOST,script
     child_process.exec script,cwd:@dirname,(error,stdout,stderr)=>
       return deferred.reject error if error?
 
-      debug stdout,stderr
+      @log @env.HOST,stdout,stderr
 
       script= "git log --format=format:%H -1
             && echo ''
             && git log origin/master --format=format:%H -1"
-      debug script
+      @log script
       child_process.exec script,cwd:@dirname,(error,stdout,stderr)=>
         return deferred.resolve [no,null,null] if error? # maybe "fatal: bad default revision 'HEAD'"
 
-        debug stdout,stderr
+        @log @env.HOST,stdout,stderr
 
         [local,remote]= stdout.split '\n'
         deferred.resolve [local isnt remote,local,remote]

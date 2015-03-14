@@ -3,17 +3,20 @@
   "main": "apps.coffee",
 
   "scripts": {
+    "reload": "pm2 reload all",
     "destroy": "pm2 kill && pm2 flush",
 
+    "reboot_test": "coffee apps.coffee -r",
+
     "start": "pm2 kill && coffee apps.coffee && pm2 list && pm2 logs",
-    "test": "pm2 restart all && pm2 logs"
+    "test": "pm2 restart all && pm2 logs big-api"
   },
   
   "dependencies": {
     "bouncy": "^3.2.2",
+    "chalk": "^1.0.0",
     "coffee-script": "^1.9.1",
     "commander": "^2.7.1",
-    "debug": "^2.1.2",
     "pm2": "^0.12.7",
     "q": "^1.2.0",
     "rimraf": "^2.3.2",

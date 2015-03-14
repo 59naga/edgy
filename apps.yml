@@ -18,4 +18,5 @@ travis.edgy.black:
   HOST: travis.edgy.black
 
 vhost:
+  HOST: edgy# dummy
   PORT: 80

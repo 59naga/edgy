@@ -1,5 +1,10 @@
 class Module
   q: require 'q'
+  chalk: require 'chalk'
+
+  log: (args...)=>
+    logo= @chalk.inverse '[EDGY]'
+    console.log ([logo].concat args)...
 
   noop: =>
     deferred= @q.defer()
