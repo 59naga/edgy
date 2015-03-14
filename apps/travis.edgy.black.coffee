@@ -15,15 +15,13 @@ deploy= (host,sha1)->
   repo= new Repository path.resolve(__dirname,host),app
   return repo.q.reject 'host is undefined' if app is undefined
 
-  console.log host,sha1
+  repo.log host,sha1
 
   repo.update sha1
   .then ->
     pm2.connect()
   .then ->
-    pm2.delete host
-  .then ->
-    pm2.start {"#{host}":apps[host]}
+    pm2.restart host
   .then ->
     repo.q.resolve 'Update successfully'
 

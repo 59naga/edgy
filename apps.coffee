@@ -4,18 +4,16 @@ pm2= require './lib/pm2'
 Repository= require './lib/repository'
 
 if '-r' in process.argv
-  console.log 'berabou.me update test'
-
   repo= new Repository 'apps/berabou.me',apps['berabou.me']
-  pm2.connect()
+  repo.log 'berabou.me update test'
+
+  repo.update null,yes
   .then ->
-    pm2.delete 'berabou.me'
+    pm2.connect()
   .then ->
-    repo.update null,yes
+    pm2.restart 'berabou.me'
   .then ->
-    pm2.start 'berabou.me':apps['berabou.me']
-  .then ->
-    console.log 'ok'
+    repo.log 'Update successfully'
   return
 
 pm2.connect()

@@ -3,16 +3,12 @@
   "main": "apps.coffee",
 
   "scripts": {
-    "restart": "git pull && pm2 restart all",
-    "reload": "git pull && pm2 reload all",
-    "destroy": "pm2 kill && pm2 flush",
+    "start": "pm2 flush && pm2 list && pm2 logs",
 
-    "pm2": "echo $(npm bin)/pm2",
+    "reload": "pm2 reload all",
 
-    "reboot_test": "coffee apps.coffee -r",
-
-    "start": "pm2 kill && coffee apps.coffee && pm2 list && pm2 logs",
-    "test": "pm2 restart all && pm2 logs big-api"
+    "test": "coffee apps.coffee -r",
+    "destroy": "pm2 kill && coffee apps.coffee && pm2 list && pm2 logs"
   },
   
   "dependencies": {

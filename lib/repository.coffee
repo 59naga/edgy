@@ -67,6 +67,8 @@ class Repository extends require './index'
     deferred.promise
 
   update: (sha1=null,force=no)->
+    deferred= @q.defer()
+
     @fetchLogs().then (logs)=>
       [outofdate,local,remote]= logs
 
@@ -75,7 +77,19 @@ class Repository extends require './index'
         return @q.reject 'invaild request.' if remote isnt sha1
         return @q.resolve 'already up-to-date.' if not outofdate
 
-      @initialize()
+      script= "git pull"
+
+      @log @env.HOST,script
+      child_process.exec script,cwd:@dirname,(error,stdout,stderr)=>
+        return deferred.reject error if error?
+
+        @log @env.HOST,stdout,stderr
+        @install().then (stdout)=>
+          deferred.resolve this
+        .catch (error)->
+          deferred.reject error
+    
+    deferred.promise
 
   fetchLogs: ->
     deferred= @q.defer()

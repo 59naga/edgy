@@ -2,7 +2,28 @@ fs= require 'fs'
 path= require 'path'
 
 class PM2 extends require './index'
+  connect: (busy)->
+    deferred= @q.defer()
+
+    @api= require 'pm2'
+    @api.connect (error)->
+      deferred.reject error if error
+      deferred.resolve arguments...
+
+    deferred.promise
+
+  restart: (name='all')->
+    deferred= @q.defer()
+
+    @api.restart name,(error,result)->
+      deferred.reject error if error?
+      deferred.resolve result
+
+    deferred.promise
+
   start: (apps={},appDir='apps')->
+    return deferred.reject 'Requirement @connect' if @api is undefined
+
     processes= []
     for host,env of apps
       do (host,env)=>
@@ -33,10 +54,9 @@ class PM2 extends require './index'
     @q.allSettled processes
 
   delete: (name='all')->
-    deferred= @q.defer()
+    return deferred.reject 'Requirement @connect' if @api is undefined
 
-    if @api is undefined
-      return deferred.reject 'Requirement @connect'
+    deferred= @q.defer()
 
     @api.list (error,processes=[])=>
       return deferred.reject error if error
@@ -52,16 +72,6 @@ class PM2 extends require './index'
         @log name,'deleted'
         return deferred.reject error if error
         return deferred.resolve null
-
-    deferred.promise
-
-  connect: (busy)->
-    deferred= @q.defer()
-
-    @api= require 'pm2'
-    @api.connect (error)->
-      deferred.reject error if error
-      deferred.resolve arguments...
 
     deferred.promise
 
