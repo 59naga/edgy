@@ -13,7 +13,7 @@ if '-r' in process.argv
   .then ->
     repo.update null,yes
   .then ->
-    pm2.start apps['berabou.me']
+    pm2.start 'berabou.me':apps['berabou.me']
   .then ->
     console.log 'ok'
   return

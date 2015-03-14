@@ -2,7 +2,7 @@ fs= require 'fs'
 path= require 'path'
 
 class PM2 extends require './index'
-  start: (apps,appDir='apps')->
+  start: (apps={},appDir='apps')->
     processes= []
     for host,env of apps
       do (host,env)=>
