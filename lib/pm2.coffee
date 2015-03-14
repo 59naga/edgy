@@ -40,10 +40,13 @@ class PM2 extends require './index'
       return deferred.resolve null if processes.length is 0
 
       names= (processName= process.name for process in processes)
+      @log name,'launched hosts',names,(name in names)
+
       return deferred.resolve null if name isnt 'all' and not (name in names)
+      @log name,'delete'
 
       @api.delete name,(error)=>
-        @log 'deleted',name
+        @log name,'deleted'
         return deferred.reject error if error
         return deferred.resolve null
 
