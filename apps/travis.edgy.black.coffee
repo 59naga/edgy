@@ -2,6 +2,8 @@ apps= require('yamljs').load 'apps.yml'
 path= require 'path'
 fs= require 'fs'
 
+authKey= fs.readFileSync('.apps.key').toString().trim()
+
 http= require 'http'
 http.createServer (req,res)->
   res.writeHead 200,'Content-Type':'text/plain'
@@ -12,8 +14,8 @@ http.createServer (req,res)->
     querystring= require 'querystring'
 
     {host,sha1,key}= querystring.parse body
-    console.log host,sha1,key,req.headers
-    return res.end "403 Forbidden" if key isnt fs.readFileSync('.apps.key').toString().trim()
+    console.log host,sha1,key is authKey,req.headers
+    return res.end "403 Forbidden" if key isnt authKey
 
     deploy host,sha1
     .then (result)->
