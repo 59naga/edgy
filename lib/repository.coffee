@@ -66,16 +66,12 @@ class Repository extends require './index'
     deferred.promise
 
   update: (sha1=null,force=no)->
-    @fetchLogs().then (logs)->
+    @fetchLogs().then (logs)=>
       [outofdate,local,remote]= logs
 
       if force is no
-        if remote isnt sha1
-          deferred.reject 'invaild request.'
-          return deferred.promise
-        if not outofdate
-          deferred.resolve 'already up-to-date.'
-          return deferred.promise
+        return @q.reject 'invaild request.' if remote isnt sha1
+        return @q.resolve 'already up-to-date.' if not outofdate
 
       @initialize()
 
