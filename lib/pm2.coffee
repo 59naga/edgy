@@ -74,5 +74,5 @@ class PM2 extends require './index'
         return deferred.resolve null
 
     deferred.promise
-
+  
 module.exports= new PM2

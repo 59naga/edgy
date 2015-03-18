@@ -62,7 +62,7 @@ class Repository extends require './index'
         return deferred.reject error if error?
 
         @log @env.HOST,stdout,stderr
-        deferred.resolve this
+        deferred.resolve null
 
     deferred.promise
 
@@ -84,8 +84,8 @@ class Repository extends require './index'
         return deferred.reject error if error?
 
         @log @env.HOST,stdout,stderr
-        @install().then (stdout)=>
-          deferred.resolve this
+        @install().then =>
+          deferred.resolve null
         .catch (error)->
           deferred.reject error
     

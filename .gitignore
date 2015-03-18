@@ -7,3 +7,5 @@ bower_components
 npm-debug.log
 jasminetea.json
 coverage
+
+storage
