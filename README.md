@@ -1,6 +1,7 @@
 # EDGY
 backdoors
 * [berabou.me](https://github.com/59naga/berabou.me/)
+* [static.edgy.black](https://static.edgy.black/)
 * [edgy.black](https://github.com/59naga/edgy.black/)
 * [edgy.website](https://github.com/59naga/edgy.website/)
 
