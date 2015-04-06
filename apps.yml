@@ -4,11 +4,16 @@ berabou.me:
   REPO: https://github.com/59naga/berabou.me.git
   NODE_ENV: production
 
+static.edgy.black:
+  PORT: 59000
+  HOST: static.edgy.black
+
 edgy.black:
   PORT: 59001
   HOST: edgy.black
   REPO: https://github.com/59naga/edgy.black.git
-  NODE_ENV: production
+  DB_HOST: 192.168.59.103:3306
+  # NODE_ENV: production
 
 edgy.website:
   PORT: 59002
