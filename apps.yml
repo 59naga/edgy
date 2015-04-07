@@ -17,8 +17,8 @@ edgy.black:
   PUBLIC_URL: http://edgy.black/
   consumerKey: J2XKCX0KqCrEG7JjpsrpvTbFS
   consumerSecret: J3D8FzAtkns2mJeYVbtgAPrBKHh7jzHMsD44D5der1irmBZlkg
-  accessToken: 3139954207-0LY1PO7c9FDc7VDeFhniSvUaAsdXcOKBbOPkC0F
-  accessSecret: wSftm0f5VqUH24wCHc3qft54H2toV3EAVI57UW12WCX24
+  accessToken: 3139954207-obmo1vQTAs7Hv2pmYfyK6q4zywiLN7nBNUO1d4B
+  accessSecret: T4Rru2KMxKMQS3JkXnXaoAIgQTiIRbz6FK4cszrg2oyUh
   NODE_ENV: production
 
 edgy.website:
