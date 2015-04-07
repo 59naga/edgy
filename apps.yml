@@ -13,7 +13,7 @@ edgy.black:
   PORT: 59001
   HOST: edgy.black
   REPO: https://github.com/59naga/edgy.black.git
-  DB_HOST: 192.168.59.103:3306
+  DB: localhost:3306
   NODE_ENV: production
 
 edgy.website:
