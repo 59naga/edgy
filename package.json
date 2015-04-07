@@ -9,6 +9,7 @@
 
     "test": "coffee apps.coffee -r",
     "stop": "pm2 kill",
+    "predestroy": "onefile --json apps/edgy.black/bower.json --output apps/edgy.black/client/public/pkgs.js -cms",
     "destroy": "pm2 kill && coffee apps.coffee && pm2 list && pm2 logs"
   },
   
@@ -18,6 +19,7 @@
     "coffee-script": "^1.9.1",
     "commander": "^2.7.1",
     "express": "^4.12.3",
+    "onefile": "^0.2.10",
     "pm2": "^0.12.9",
     "q": "^1.2.0",
     "rimraf": "^2.3.2",
