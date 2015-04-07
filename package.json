@@ -3,14 +3,13 @@
   "main": "apps.coffee",
 
   "scripts": {
-    "start": "pm2 flush && pm2 list && pm2 logs",
-
-    "reload": "pm2 reload all",
-
-    "test": "coffee apps.coffee -r",
+    "destroy": "pm2 kill && coffee apps.coffee && pm2 list && pm2 logs",
     "stop": "pm2 kill",
-    "predestroy": "onefile --json apps/edgy.black/bower.json --output apps/edgy.black/client/public/pkgs.js -cms",
-    "destroy": "pm2 kill && coffee apps.coffee && pm2 list && pm2 logs"
+
+    "prereload": "cd apps/edgy.black && git pull",
+    "reload": "$(npm bin)/pm2 restart edgy.black",
+    
+    "build": "onefile --json apps/edgy.black/bower.json --output apps/edgy.black/client/public/pkgs.js -cms"
   },
   
   "dependencies": {
