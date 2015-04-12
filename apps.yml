@@ -13,13 +13,9 @@ edgy.black:
   PORT: 59001
   HOST: edgy.black
   REPO: https://github.com/59naga/edgy.black.git
+  NODE_ENV: production
   DB: localhost:3306
   PUBLIC_URL: http://edgy.black/
-  consumerKey: J2XKCX0KqCrEG7JjpsrpvTbFS
-  consumerSecret: J3D8FzAtkns2mJeYVbtgAPrBKHh7jzHMsD44D5der1irmBZlkg
-  accessToken: 3139954207-obmo1vQTAs7Hv2pmYfyK6q4zywiLN7nBNUO1d4B
-  accessSecret: T4Rru2KMxKMQS3JkXnXaoAIgQTiIRbz6FK4cszrg2oyUh
-  NODE_ENV: production
   MYPAGE_HOST: edgy.website
 
 edgy.website:
