@@ -6,9 +6,12 @@
     "destroy": "pm2 kill && coffee apps.coffee && pm2 list && pm2 logs",
     "stop": "pm2 kill",
 
-    "prereload": "cd apps/edgy.black && git pull",
+    "update": "cd apps/edgy.black && git pull",
+
+    "prereload": "npm run update",
     "reload": "$(npm bin)/pm2 restart edgy.black",
     
+    "prebuild": "npm run update",
     "build": "onefile --json apps/edgy.black/bower.json --output apps/edgy.black/client/public/pkgs.js -cms"
   },
   
