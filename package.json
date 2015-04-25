@@ -8,7 +8,8 @@
 
     "update": "cd apps/edgy.black && git pull",
 
-    "buckup-sql": "mysqldump edgy_test > backups/$(date '+%Y%m%d-%H%M%S').sql",
+    "buckup": "npm run buckup-sql && npm run buckup-zip",
+    "buckup-sql": "mysqldump edgy_test -u root -h localhost --compress -r backups/$(date '+%Y%m%d-%H%M%S').sql",
     "backup-zip": "zip -r backups/$(date '+%Y%m%d-%H%M%S') apps/edgy.black/storage",
 
     "prereload": "npm run update",
