@@ -9,3 +9,5 @@ jasminetea.json
 coverage
 
 storage
+backups/*.sql
+backups/*.zip
