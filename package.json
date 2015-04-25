@@ -7,9 +7,7 @@
     "stop": "pm2 kill",
 
     "update": "cd apps/edgy.black && git pull",
-
-    "buckup": "mysqldump edgy_test > $(pwd)/backups/$(date '+%Y%m%d-%H%k%M').sql",
-    "postbackup": "zip -r $(pwd)/backups/$(date '+%Y%m%d-%H%k%M') $(pwd)/apps/edgy.black/storage",
+    "buckup": "sh backup.sh",
 
     "prereload": "npm run update",
     "reload": "$(npm bin)/pm2 restart edgy.black",
