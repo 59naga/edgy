@@ -4,6 +4,19 @@ backdoors
 * [static.edgy.black](http://static.edgy.black/)
 * [edgy.black](https://github.com/59naga/edgy.black/)
 
+# Backing up
+```bash
+$ npm run backup
+$ exit
+$ scp edgy:edgy/backups/$(date '+%Y%m%d-%H')* .
+```
+## Rollbacking the docker-mysql(for develop)
+```bash
+$ cd edgy.black/..
+$ unzip ******-******.zip -o
+$ docker exec -i edgy.black mysql edgy_test < edgy.black.sql
+```
+
 v0.0.3 Sat Mar 19 2015
 =========================
 * [`fd11bae`][1] :bug: Fix: Cannot read property 'indexOf' of undefined
