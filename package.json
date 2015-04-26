@@ -1,23 +1,22 @@
 {
   "name": "edgy",
   "main": "apps.coffee",
+  "version": "0.0.3",
+  "private": true,
 
-  "config":{
-    "now": "date '+%Y%m%d-%H%M%S'"
-  },
   "scripts": {
     "destroy": "pm2 kill && coffee apps.coffee && pm2 list && pm2 logs",
     "stop": "pm2 kill",
-
-    "update": "cd apps/edgy.black && git pull",
 
     "backup": "export NOW=$(date '+%Y%m%d-%H%M%S') && npm run backup-sql && npm run backup-zip && npm run backup-clean",
     "backup-sql": "mysqldump edgy_test -u root -h localhost --compress -r backups/$NOW.sql",
     "backup-zip": "zip -r backups/$NOW apps/edgy.black/storage backups/$NOW.sql",
     "backup-clean": "rm backups/$NOW.sql",
 
+    "update": "cd apps/edgy.black && git pull",
+
     "prereload": "npm run update",
-    "reload": "$(npm bin)/pm2 restart edgy.black",
+    "reload": "pm2 restart edgy.black",
     
     "prebuild": "npm run update",
     "build": "onefile --json apps/edgy.black/bower.json --output apps/edgy.black/client/public/pkgs.js -cms"
@@ -30,7 +29,7 @@
     "commander": "^2.7.1",
     "express": "^4.12.3",
     "onefile": "^0.2.11",
-    "pm2": "^0.12.9",
+    "pm2": "^0.12.12",
     "q": "^1.2.0",
     "rimraf": "^2.3.2",
     "yamljs": "^0.2.1"

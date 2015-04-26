@@ -26,6 +26,10 @@ edgy.website:
 #   PORT: 59999
 #   HOST: travis.edgy.black
 
+backup:
+  HOST: backup# dummy
+  PORT: 80
+
 vhost:
   HOST: edgy# dummy
   PORT: 80
