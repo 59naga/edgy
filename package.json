@@ -8,9 +8,10 @@
 
     "update": "cd apps/edgy.black && git pull",
 
-    "backup": "npm run backup-sql && npm run backup-zip",
-    "backup-sql": "mysqldump edgy_test -u root -h localhost --compress -r backups/$(date '+%Y%m%d-%H%M%S').sql",
-    "backup-zip": "zip -r backups/$(date '+%Y%m%d-%H%M%S') apps/edgy.black/storage",
+    "backup": "NOW=$(date '+%Y%m%d-%H%M%S') npm run backup-sql && npm run backup-zip",
+    "backup-sql": "mysqldump edgy_test -u root -h localhost --compress -r backups/$NOW.sql",
+    "backup-zip": "zip -r backups/$NOW apps/edgy.black/storage backups/$NOW.sql",
+    "postbackup": "rm backups/$NOW.sql",
 
     "prereload": "npm run update",
     "reload": "$(npm bin)/pm2 restart edgy.black",
