@@ -11,8 +11,8 @@
 
     "update": "cd apps/edgy.black && git pull",
 
-    "backup": "NOW=$(date '+%Y%m%d-%H%M%S') && npm run backup-sql && npm run backup-zip && npm run backup-clean",
-    "backup-sql": "mysqldump edgy_test -u root -h localhost --compress -r backups/$NOW.sql",
+    "backup": "export NOW=$(date '+%Y%m%d-%H%M%S') && npm run backup-sql && npm run backup-zip && npm run backup-clean",
+    "backup-sql": "docker exec -it edgy.black mysqldump edgy_test -u root -h localhost --compress -r backups/$NOW.sql",
     "backup-zip": "zip -r backups/$NOW apps/edgy.black/storage backups/$NOW.sql",
     "backup-clean": "rm backups/$NOW.sql",
 
