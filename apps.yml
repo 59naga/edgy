@@ -4,6 +4,11 @@ turnout.berabou.me:
   REPO: https://github.com/59naga/turnout.berabou.me.git
   NODE_ENV: production
 
+soysauce.berabou.me:
+  PORT: 59800
+  HOST: soysauce.berabou.me
+  NODE_ENV: production
+
 berabou.me:
   PORT: 59798
   HOST: berabou.me
