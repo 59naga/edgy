@@ -1,6 +1,6 @@
 express= require 'express'
-Soysauce= require 'soysauce'
+soysauce= require 'soysauce'
 
 app= express()
-app.use new Soysauce().middleware()
+app.use soysauce.middleware()
 app.listen process.env.PORT
