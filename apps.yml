@@ -1,3 +1,9 @@
+npm.berabou.me:
+  PORT: 59801
+  HOST: npm.berabou.me
+  REPO: https://github.com/59naga/npm.berabou.me.git
+  NODE_ENV: production
+
 turnout.berabou.me:
   PORT: 59799
   HOST: turnout.berabou.me
