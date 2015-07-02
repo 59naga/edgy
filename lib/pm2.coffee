@@ -47,7 +47,7 @@ class PM2 extends require './index'
             deferred.reject error if error?
             deferred.resolve process
         catch error
-          deferred.resolve error
+          deferred.reject error
 
         processes.push deferred.promise
 
