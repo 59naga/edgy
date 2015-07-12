@@ -1,3 +1,9 @@
+nicolive.berabou.me:
+  PORT: 59802
+  HOST: nicolive.berabou.me
+  REPO: https://github.com/59naga/nicolive.berabou.me.git
+  NODE_ENV: production
+
 npm.berabou.me:
   PORT: 59801
   HOST: npm.berabou.me
